@@ -17,6 +17,7 @@ cd reactor
 python submission.py init --data /absolute/path/to/test --out /absolute/path/to/run
 python examples/prepare_openprovence.py --input /absolute/path/to/run --out /absolute/path/to/retrieval --device cuda --save-audit
 python submission.py freeze --out /absolute/path/to/run --plans /absolute/path/to/retrieval/plans.jsonl
+python submission.py concise --out /absolute/path/to/run --schedule ../run-settings.json
 python submission.py check --out /absolute/path/to/run
 python submission.py run --out /absolute/path/to/run --agent-free
 python submission.py validate --out /absolute/path/to/run
@@ -24,7 +25,7 @@ python submission.py validate --out /absolute/path/to/run
 
 Choose `mps` or `cpu` instead of `cuda` where necessary. Retrieval can be prepared on rented GPU hardware with `examples/gpu_prepare_openprovence.py`; only our own models run there. The final run's complete retrieval preparation took about 333 seconds on an A10G. Reactor answering remains sequential and can take minutes per question. Embedding caches and frozen inputs are retained locally.
 
-For a small organizer rerun, supply a subset of questions with their full source histories in a new data directory and follow the same commands. Gold is never used for retrieval or answering. The files named `benchmark_*` supply shared adapters and transport; `submission.py` is the final entry point. The final run uses fixed retrieved evidence, without model-controlled MCP search.
+For a small organizer rerun, supply a subset of questions with their full source histories in a new data directory and follow the same commands. Gold is never used for retrieval or answering. The files named `benchmark_*` supply shared adapters and transport; `submission.py` is the final entry point. The final run uses fixed retrieved evidence, without model-controlled MCP search. After question 41, the user requested concise final answers and a maximum retry backoff of 5 seconds. The v5 guidance and retrieved evidence stayed unchanged; `run-settings.json` records the per-question output style so a rerun uses the same prompts. Existing answers and user histories were preserved.
 
 ## Credentials and safe resume
 

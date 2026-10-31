@@ -5,5 +5,10 @@
   "previous_answers_reused": 0,
   "prompt_version": "memory-goal-v5",
   "retrieval_profile": "bge-large-openprovence-005-v1",
-  "predictions_published": false
+  "predictions_published": false,
+  "speed_adjustment": {
+    "first_concise_question": 42,
+    "max_retry_backoff_s": 5,
+    "history_resets_within_user": 0
+  }
 }

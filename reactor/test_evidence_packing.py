@@ -11,6 +11,17 @@ class PackingTests(unittest.TestCase):
         return Fragment(**({"id": f"s_{i}", "date": "2024-02-29", "turn_id": "t_0",
                             "start": 0, "end": 100, "text": text} | kw))
 
+    def test_concise_contract_keeps_guidance_evidence_and_fits_existing_budget(self):
+        from answer_guidance import ANSWER_GUIDANCE
+        evidence = [annotated(self.q, self.f(i)) for i in range(12)]
+        standard = answer_message(self.q, evidence, "12345678")
+        concise = answer_message(self.q, evidence, "12345678", response_style="concise-v1")
+        self.assertLessEqual(len(concise), len(standard))
+        self.assertIn(ANSWER_GUIDANCE, concise)
+        self.assertEqual(standard.split('\n\nReturn JSON:')[0], concise.split('\n\nGoal:')[0])
+        self.assertIn('[E12]', concise)
+        self.assertIn('INSUFFICIENT_EVIDENCE', concise)
+
     def test_exact_message_boundary(self):
         f = self.f(0)
         size = len(answer_message(self.q, [annotated(self.q, f)], "abcdefgh"))

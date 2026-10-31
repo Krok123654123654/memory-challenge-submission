@@ -57,6 +57,10 @@ def main():
               "total_answer_wait_s": round(sum(timings), 2),
               "predictions_sha256": hashlib.sha256(payload).hexdigest(),
               "completed_utc": datetime.now(timezone.utc).isoformat(), "official_score": "not available"}
+    protocol = json.loads((args.run / "protocol.json").read_text())
+    status["speed_adjustment"] = protocol.get("speed_adjustment")
+    from collections import Counter
+    status["response_style_counts"] = dict(Counter(protocol.get("response_styles", {}).values()))
     (ROOT / "submission-status.json").write_text(json.dumps(status, indent=2) + "\n")
     readme = ROOT / "README.md"
     text = readme.read_text()

@@ -7,7 +7,7 @@ import unittest
 from answer_guidance import ANSWER_GUIDANCE
 from evidence_packing import answer_message
 from model_config import RETRIEVAL_PROFILE
-from submission import validate_complete
+from submission import validate_complete, enable_concise
 
 
 class SubmissionValidationTests(unittest.TestCase):
@@ -41,6 +41,28 @@ class SubmissionValidationTests(unittest.TestCase):
 
     def test_complete_provenanced_predictions_pass(self):
         self.assertTrue(validate_complete(self.root)["valid"])
+
+    def test_concise_changes_only_unsent_inputs_and_keeps_evidence(self):
+        first = (self.root / "q_0/input.json").read_bytes()
+        path = self.root / "q_1/input.json"
+        original = json.loads(path.read_text())
+        for name in ("result.json", "response.json", "state.json"):
+            (self.root / "q_1" / name).unlink()
+        self.assertEqual(enable_concise(self.root)["concise_unsent_questions"], 1)
+        changed = json.loads(path.read_text())
+        self.assertEqual(first, (self.root / "q_0/input.json").read_bytes())
+        self.assertEqual(changed["evidence"], original["evidence"])
+        self.assertEqual(changed["ref"], original["ref"])
+        self.assertLessEqual(len(changed["prompt"]), len(original["prompt"]))
+        self.assertEqual(changed["response_style"], "concise-v1")
+
+    def test_concise_never_changes_pending_request(self):
+        for name in ("result.json", "response.json"):
+            (self.root / "q_1" / name).unlink()
+        self.save("q_1/state.json", {"pending": True})
+        before = (self.root / "q_1/input.json").read_bytes()
+        self.assertEqual(enable_concise(self.root)["concise_unsent_questions"], 0)
+        self.assertEqual(before, (self.root / "q_1/input.json").read_bytes())
 
     def test_missing_prediction_is_not_converted_to_abstention(self):
         self.jsonl("predictions.jsonl", self.rows[:1])

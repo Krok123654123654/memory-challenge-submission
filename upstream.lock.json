@@ -7,7 +7,7 @@
       "path": "reactor/client.py",
       "url": "https://raw.githubusercontent.com/RxAI-dev/memory-challenge/f0a317dfa13e7797baae61711cef27a9805bedcc/reactor/client.py",
       "sha256": "99cd636b269736bfb0e7bcf0d1f1fbe7b47613753a1f9cc342aa3d0912d8a9a0",
-      "installed_sha256": "4213b984462a9f91b8ad33403779a53de9a88b037231de40c92935de1cbdb1df"
+      "installed_sha256": "fb7952e990228462d58b8da796d82ea35be7a0e51e726d599e2acac87487a75f"
     },
     {
       "path": "score.py",

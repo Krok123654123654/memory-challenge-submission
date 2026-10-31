@@ -63,7 +63,8 @@ def check(root, only_history=None, require_complete_inputs=True):
             continue
         data = json.loads(p.read_text())
         assert data["question"] == q, "Frozen question changed"
-        assert data["prompt"] == answer_message(q, data["evidence"], data["ref"]), "Frozen message changed"
+        assert data["prompt"] == answer_message(q, data["evidence"], data["ref"],
+            response_style=data.get("response_style", "standard")), "Frozen message changed"
         assert len(data["prompt"]) <= 16000 and len(data["evidence"]) <= 12
         sessions = {s["session_id"]: s for s in hs[q["history_id"]]["sessions"]}
         for e in data["evidence"]:
@@ -127,6 +128,41 @@ def reparse_completed(root):
                           parsing_revision="json-delimiters-v2")
             save(result_path, result)
     runner.report(SimpleNamespace(out=root))
+
+
+def enable_concise(root, schedule=None):
+    """Change only unsent wire prompts; preserve source evidence and request refs."""
+    import fcntl
+    changes = []
+    styles = json.loads(schedule.read_text())["response_styles"] if schedule else None
+    with (root / "batch.lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        for q in runner.checked_questions(root):
+            if styles is not None and styles.get(q["question_id"], "standard") != "concise-v1":
+                continue
+            folder = root / q["question_id"]
+            if any((folder / name).exists() for name in ("state.json", "response.json", "result.json")):
+                continue
+            path = folder / "input.json"
+            data = json.loads(path.read_text())
+            old = data["prompt"]
+            data["response_style"] = "concise-v1"
+            data["prompt"] = answer_message(q, data["evidence"], data["ref"], response_style="concise-v1")
+            assert len(data["prompt"]) <= len(old) <= 16000
+            if not (folder / "input-before-concise.json").exists():
+                shutil.copy2(path, folder / "input-before-concise.json")
+            save(path, data)
+            changes.append(q["question_id"])
+        protocol = json.loads((root / "protocol.json").read_text())
+        protocol["response_styles"] = {q["question_id"]: json.loads(
+            (root / q["question_id"] / "input.json").read_text()).get("response_style", "standard")
+            for q in runner.checked_questions(root)}
+        protocol["speed_adjustment"] = {"reason": "User requested shorter final answers and 5-second retry cap",
+            "guidance_unchanged": True, "evidence_unchanged": True, "history_policy_unchanged": True,
+            "max_retry_backoff_s": 5.0}
+        save(root / "protocol.json", protocol)
+        check(root)
+    return {"concise_unsent_questions": len(changes), "first": changes[0] if changes else None}
 
 
 def run(args):
@@ -211,10 +247,11 @@ def package(args):
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("stage", choices=["init", "freeze", "check", "run", "validate", "package"])
+    p.add_argument("stage", choices=["init", "freeze", "check", "run", "validate", "package", "concise"])
     p.add_argument("--out", type=Path, default=KIT / "submission/final-20261031")
     p.add_argument("--data", type=Path)
     p.add_argument("--plans", type=Path)
+    p.add_argument("--schedule", type=Path, help="Per-question response styles for exact reproduction")
     p.add_argument("--history")
     p.add_argument("--partial", action="store_true")
     p.add_argument("--agent-free", action="store_true")
@@ -226,6 +263,8 @@ if __name__ == "__main__":
         runner.freeze(args)
     elif args.stage == "check":
         print(json.dumps(check(args.out, args.history, not args.partial), indent=2))
+    elif args.stage == "concise":
+        print(json.dumps(enable_concise(args.out, args.schedule)))
     elif args.stage == "validate":
         print(json.dumps(validate_complete(args.out), indent=2))
     elif args.stage == "package":

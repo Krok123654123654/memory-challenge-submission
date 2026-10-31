@@ -22,11 +22,18 @@ def evidence_block(evidence):
                      for i, e in enumerate(evidence, 1))
 
 
-def answer_message(question, evidence, ref):
-    return (f"[ref:{ref}] Question: {question['question']}\n"
+def answer_message(question, evidence, ref, *, response_style="standard"):
+    if response_style not in {"standard", "concise-v1"}:
+        raise ValueError("Unknown response style")
+    prefix = (f"[ref:{ref}] Question: {question['question']}\n"
         f"Question date: {question['question_date']}.\n{ANSWER_GUIDANCE}\n\nEvidence:\n"
-        + evidence_block(evidence)
-        + '\n\nReturn JSON: {"action":"answer","answer":"your answer [E1]","abstain":false}. '
+        + evidence_block(evidence))
+    if response_style == "concise-v1":
+        return (prefix + '\n\nGoal: a concise, complete answer with all supporting citations, without discussing distractors.\n'
+            'Return {"action":"answer","answer":"facts [E1]","abstain":false}. Use true and "" or '
+            'INSUFFICIENT_EVIDENCE with partial-evidence labels when abstaining.\n'
+            f'One JSON line starting # FINAL ANSWER [ref:{ref}]:')
+    return (prefix + '\n\nReturn JSON: {"action":"answer","answer":"your answer [E1]","abstain":false}. '
         'Citations belong inside the answer string. For abstention, abstain is true and the answer is '
         'empty or INSUFFICIENT_EVIDENCE with any partial-evidence labels.\n'
         f'Write that JSON on one line starting exactly with # FINAL ANSWER [ref:{ref}]:')

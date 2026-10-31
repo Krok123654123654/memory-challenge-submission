@@ -1,5 +1,5 @@
 diff --git a/reactor/client.py b/reactor/client.py
-index 882c5e6..36aa782 100644
+index 882c5e6..4335355 100644
 --- a/reactor/client.py
 +++ b/reactor/client.py
 @@ -63,7 +63,7 @@ Every outcome carries ``other_replies`` and ``late_replies`` where they apply, p
@@ -28,6 +28,15 @@ index 882c5e6..36aa782 100644
  # A final-answer line, "# FINAL ANSWER [ref:1a2b3c4d]: ...": like reactor-agent's own benchmark scorer
  # (benchmark/scorers.py), flexible on '#'s, case, spacing, "_"/"-" and the colon, anchored at a line start.
  _FINAL = re.compile(r"^[ \t]*#{1,3}[ \t]*final[ _-]?answer[ \t]*"
+@@ -102,7 +104,7 @@ INSUFFICIENT = "INSUFFICIENT_EVIDENCE"
+ _INSUFFICIENT = re.compile(rf"^\W*{INSUFFICIENT}\b", re.IGNORECASE)
+ # Refusals worth asking again, when the server says the question was never forwarded ("forwarded": false).
+ RETRYABLE = ("busy", "previous_pending")
+-_RETRY_FIRST, _RETRY_MAX = 1.0, 8.0  # seconds, doubling
++_RETRY_FIRST, _RETRY_MAX = 1.0, 5.0  # seconds, doubling up to the cap
+ 
+ 
+ def environment_problem(version: tuple = sys.version_info, ws=websockets) -> str | None:
 @@ -188,13 +190,15 @@ def load_evidence(raw: str) -> list[dict]:
      """Passages as ``{"id", "text"}`` (``id`` None when not given), plus ``"date"`` when given: a JSON list of strings
      or ``{"id", "text"}`` objects, each with an optional ``"date"`` (the session's date, a one-line string passed on
@@ -116,6 +125,15 @@ index 882c5e6..36aa782 100644
                          continue  # queued from before, or from a cycle that took its input before this message
                      result = {"reply": reply, "cycle": cycle, "latency_s": round(time.monotonic() - started, 2),
                                "other_replies": others, "late_replies": late}
+@@ -336,7 +345,7 @@ async def ask(base_url: str, agent_id: str, access_key: str, text: str, *, timeo
+ def ask_retrying(base_url: str, agent_id: str, access_key: str, text: str, *, timeout: float,
+                  ref: str | None = None, history: str | None = None) -> tuple[dict, int]:
+     """ask(), asked again after a ``busy`` or ``previous_pending`` refusal that the server says never reached the agent
+-    (``"forwarded": false``) -- backing off 1, 2, 4, 8 s, all within ``timeout``. Late replies seen along the way
++    (``"forwarded": false``) -- backing off 1, 2, 4, 5 s, all within ``timeout``. Late replies seen along the way
+     are kept. Returns ``(result, retries)``; what it raises carries ``retries``."""
+ 
+     deadline = time.monotonic() + timeout
 @@ -420,6 +429,9 @@ def main(argv: list[str] | None = None) -> int:
      what.add_argument("--new-history", action="store_true", help="start a new, independent history")
      what.add_argument("--question", help="your question, sent with --evidence in the template")
