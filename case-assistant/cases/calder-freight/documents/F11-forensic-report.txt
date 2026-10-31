@@ -1,0 +1,10 @@
+title: Forensic accountant's report
+kind: report
+date: 2026-01-15
+author: lucy-tran
+---
+I confirm the 23 invoices totalling £198,400 identified by the auditor. Eleven pairs of invoices have consecutive numbers, the same date and the same depot, and each invoice of a pair is just under £10,000.
+
+Ortega Facility Services paid £28,510 to Voss Consulting Ltd in four transfers, about 14% of the invoices Calder paid in the days before each transfer.
+
+I cannot say whether services were provided for the 6 invoices that do have site records.

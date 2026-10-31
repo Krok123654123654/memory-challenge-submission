@@ -1,0 +1,16 @@
+[
+  {"id": "clara-voss", "name": "Clara Voss", "role": "defendant (former Finance Director)", "aliases": ["Clara", "Ms Voss"],
+   "notes": "Finance Director of Calder Freight until October 2025. Sole director of Voss Consulting Ltd."},
+  {"id": "felix-ortega", "name": "Felix Ortega", "role": "defendant (supplier owner)", "aliases": ["Felix", "Mr Ortega"],
+   "notes": "Owner of Ortega Facility Services Ltd."},
+  {"id": "peter-lang", "name": "Peter Lang", "role": "witness (CEO, claimant)", "aliases": ["Peter", "Mr Lang", "P. Lang"],
+   "notes": "Chief Executive of Calder Freight Ltd."},
+  {"id": "nadia-rahman", "name": "Nadia Rahman", "role": "witness (accounts payable)", "aliases": ["Nadia", "Ms Rahman"],
+   "notes": "Accounts payable clerk at Calder Freight."},
+  {"id": "jonas-weber", "name": "Jonas Weber", "role": "witness (external auditor)", "aliases": ["Jonas"],
+   "notes": "Audit partner, Weber & Kline. Not related to Lena Weber."},
+  {"id": "lena-weber", "name": "Lena Weber", "role": "witness (operations manager)", "aliases": ["Lena"],
+   "notes": "Operations manager at Calder Freight. Not the auditor."},
+  {"id": "lucy-tran", "name": "Lucy Tran", "role": "expert (forensic accountant)", "aliases": ["Ms Tran"],
+   "notes": "Instructed by the claimant."}
+]

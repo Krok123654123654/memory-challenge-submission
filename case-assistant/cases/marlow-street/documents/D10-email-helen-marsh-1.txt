@@ -1,0 +1,10 @@
+title: Email from Helen Marsh to her insurer (first)
+kind: email
+date: 2026-03-15
+author: helen-marsh
+---
+Subject: Claim — burglary at Marlow Street Gallery store
+
+Last night the store was broken into. Missing are three paintings and one bronze sculpture: "Harbour at Dusk" (oil, valued at £23,000), "Two Figures" (oil, £18,000), "Winter Field" (watercolour, £9,000) and "Standing Woman" (bronze, £34,000). Total £84,000.
+
+I will send the purchase records separately.

@@ -1,0 +1,10 @@
+{"question": "Did Peter Lang approve invoice ORT-0451?", "person": null, "answer": "Disputed: an approval was sent from his mailbox on 11 August 2025 at 23:14, but he says he was on leave 4–18 August without his laptop and Clara Voss had delegated access; Clara Voss says he approved it.", "docs": ["F08-approval-email", "F09-statement-peter-lang", "F12-defence-clara-voss"]}
+{"question": "What happened between 1 and 31 August 2025?", "person": null, "answer": "Peter Lang on leave 4–18 August; Ortega paid £9,050 to Voss Consulting on 8 August; ORT-0451 approved from Peter Lang's mailbox on 11 August at 23:14.", "docs": ["F06-bank-extract", "F08-approval-email", "F09-statement-peter-lang"]}
+{"question": "When did Nadia Rahman first raise a concern?", "person": "nadia-rahman", "answer": "First said 15 September 2025; corrected to 21 July 2025 in her second statement.", "docs": ["F03-statement-nadia-rahman-1", "F04-statement-nadia-rahman-2"]}
+{"question": "How much did Ortega pay to Voss Consulting?", "person": null, "answer": "£28,510 in four transfers.", "docs": ["F06-bank-extract"]}
+{"question": "Who is the director of Voss Consulting?", "person": null, "answer": "Clara Voss (sole director and shareholder).", "docs": ["F07-companies-house"]}
+{"question": "Did anyone see Ortega workers at the depots?", "person": null, "answer": "No: Lena Weber never saw anyone from Ortega at any depot in 2025.", "docs": ["F13-statement-lena-weber"]}
+{"question": "Was Peter Lang at the board meeting that approved Ortega?", "person": null, "answer": "No: he sent apologies (travelling) to the 12 February 2025 meeting.", "docs": ["F01-board-minutes"]}
+{"question": "What was the approval limit for the Finance Director?", "person": null, "answer": "£10,000 per invoice.", "docs": ["F01-board-minutes"]}
+{"question": "Which Weber flagged the Ortega invoices?", "person": null, "answer": "Jonas Weber, the external auditor, on 29 September 2025.", "docs": ["F10-auditor-letter"]}
+{"question": "What was Felix Ortega's salary?", "person": null, "answer": "NOT IN FILE", "docs": []}

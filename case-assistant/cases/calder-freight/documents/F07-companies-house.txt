@@ -1,0 +1,8 @@
+title: Companies House extract: Voss Consulting Ltd
+kind: report
+date: 2025-10-02
+author: lucy-tran
+---
+Voss Consulting Ltd was incorporated on 18 November 2024. Its sole director and shareholder is Clara Voss. Its registered office is Clara Voss's home address.
+
+The company has filed no accounts and lists its activity as "management consultancy".

@@ -1,0 +1,8 @@
+title: Approval email for invoice ORT-0451 (from Peter Lang's mailbox; authorship disputed)
+kind: email
+date: 2025-08-11
+author:
+---
+Subject: RE: ORT-0451 depot maintenance £9,800
+
+Sent from Peter Lang's mailbox on 11 August 2025 at 23:14: "Approved — P. Lang".

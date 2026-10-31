@@ -1,0 +1,10 @@
+title: Bank extract: payments from Ortega Facility Services to Voss Consulting
+kind: report
+date: 2025-10-24
+author: lucy-tran
+---
+Payments out of the account of Ortega Facility Services Ltd to account ending 4471, held by Voss Consulting Ltd:
+
+On 4 April 2025, £6,180. On 6 June 2025, £7,420. On 8 August 2025, £9,050. On 12 September 2025, £5,860. Total £28,510.
+
+Each payment was made within three days of a payment from Calder Freight to Ortega Facility Services.

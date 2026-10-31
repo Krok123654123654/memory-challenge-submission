@@ -1,0 +1,6 @@
+title: Check-in inventory
+kind: report
+date: 2024-09-01
+author: tom-byrne
+---
+Hallway: walls painted, minor scuff by the front door. Bedroom: carpet in good condition. Bathroom: extractor fan working; small damp patch on the ceiling above the shower.

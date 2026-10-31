@@ -1,0 +1,11 @@
+title: Messages between Grace Okafor and Tom Byrne
+kind: messages
+date: 2025-09-08
+author: grace-okafor
+---
+Grace Okafor: [14 Jan 2025 09:12] Black mould is spreading on the bathroom ceiling and the extractor fan has stopped working. Can someone come?
+Tom Byrne: [20 Jan 2025 16:40] I've told the landlord, he'll send a contractor.
+Grace Okafor: [2 Mar 2025 18:05] Still no contractor and the mould is worse. I'm wiping it every week.
+Tom Byrne: [10 Apr 2025 11:22] Contractor booked for 17 April.
+Grace Okafor: [17 Apr 2025 15:30] Nobody came today.
+Tom Byrne: [6 May 2025 10:02] The fan was replaced this morning.

@@ -1,0 +1,15 @@
+{"question": "What time did Anna Kowalski say she saw the van?", "person": "anna-kowalski", "answer": "First about 22:15; in her second statement she corrected it to closer to 23:00.", "docs": ["D02-statement-anna-kowalski-1", "D03-statement-anna-kowalski-2"]}
+{"question": "Did Tomasz Kowalski see the van himself?", "person": "tomasz-kowalski", "answer": "No. He only heard an engine at about 23:10; what he knows of the van comes from his wife.", "docs": ["D04-statement-tomasz-kowalski"]}
+{"question": "Where did Daniel Reyes say he was on the evening of 14 March?", "person": "daniel-reyes", "answer": "First at home watching football with Sam; in the second interview, out near the canal to meet a motorbike buyer, driven by Sam.", "docs": ["D05-interview-daniel-reyes-1", "D06-interview-daniel-reyes-2"]}
+{"question": "Who has a van?", "person": null, "answer": "Sam Reyes (a white Ford Transit; registration ends K7).", "docs": ["D05-interview-daniel-reyes-1", "D14-cctv-log"]}
+{"question": "What is the value of the stolen items now?", "person": "helen-marsh", "answer": "£61,000, after Harbour at Dusk was found and removed from the claim (first claimed £84,000).", "docs": ["D11-email-helen-marsh-2"]}
+{"question": "When did the alarm fault start?", "person": null, "answer": "23:05.", "docs": ["D01-initial-report", "D07-interview-martin-hale"]}
+{"question": "Was the night guard on site at 23:00?", "person": "martin-hale", "answer": "No: he left at about 22:40 and came back at about 23:30.", "docs": ["D07-interview-martin-hale"]}
+{"question": "Where was Sam Reyes's phone that evening?", "person": "sam-reyes", "answer": "Only at his home address all evening, which conflicts with Daniel saying Sam drove him.", "docs": ["D13-phone-location-report"]}
+{"question": "Did the forensic examination identify the van?", "person": null, "answer": "No: tyre marks are consistent with a light commercial van but cannot be attributed to a specific vehicle.", "docs": ["D12-forensic-report"]}
+{"question": "Which Martin delivered a crate to the gallery, and when?", "person": null, "answer": "Martin Price, at 16:30 on 14 March; Helen Marsh signed for it.", "docs": ["D08-statement-martin-price"]}
+{"question": "What did Daniel and Sam text about the buyer?", "person": null, "answer": "Daniel wrote at 21:58 that the buyer cancelled; Sam replied he had already loaded the ladders and would come by.", "docs": ["D09-phone-messages"]}
+{"question": "What was seen on CCTV after the break-in?", "person": null, "answer": "At 23:31 a white van with a ladder rack and a dented rear right door heading north; registration ending K7, a partial match to Sam Reyes's van.", "docs": ["D14-cctv-log"]}
+{"question": "Did anyone see the face of the man loading the van?", "person": null, "answer": "No: Anna Kowalski did not see his face.", "docs": ["D02-statement-anna-kowalski-1"]}
+{"question": "What colour is Daniel Reyes's car?", "person": null, "answer": "NOT IN FILE", "docs": []}
+{"question": "Who bought the stolen paintings?", "person": null, "answer": "NOT IN FILE", "docs": []}

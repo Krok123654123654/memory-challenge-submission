@@ -1,0 +1,8 @@
+[
+  {"id": "grace-okafor", "name": "Grace Okafor", "role": "claimant (tenant)", "aliases": ["Grace", "Ms Okafor"],
+   "notes": "Tenant of Flat 3, 41 Brook Road, September 2024 to August 2025."},
+  {"id": "ian-dale", "name": "Ian Dale", "role": "defendant (landlord)", "aliases": ["Mr Dale", "the landlord"],
+   "notes": ""},
+  {"id": "tom-byrne", "name": "Tom Byrne", "role": "witness (letting agent)", "aliases": ["Tom", "Mr Byrne"],
+   "notes": "Riverside Lettings, managing agent for Ian Dale."}
+]

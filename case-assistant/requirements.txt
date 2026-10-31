@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+numpy
+torch
+transformers>=4.45,<5
+websockets>=14
+pypdf
+python-docx

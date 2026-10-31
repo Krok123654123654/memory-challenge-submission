@@ -1,0 +1,10 @@
+title: Phone location analysis
+kind: report
+date: 2026-03-23
+author: claire-brennan
+---
+Daniel Reyes's phone connected to the mast serving Marlow Street and the canal towpath between 22:48 and 23:22 on 14 March, and to the mast serving his home address before 22:35 and after 23:40.
+
+Sam Reyes's phone connected only to the mast serving his home address, 3 Fenwick Close, for the whole evening of 14 March, from 18:00 until 08:00 the next morning.
+
+The canal meeting point described by Daniel Reyes is within the coverage of the Marlow Street mast, as is the gallery store.

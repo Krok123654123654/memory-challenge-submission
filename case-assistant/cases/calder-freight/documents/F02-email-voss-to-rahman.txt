@@ -1,0 +1,8 @@
+title: Email from Clara Voss to Nadia Rahman
+kind: email
+date: 2025-03-03
+author: clara-voss
+---
+Subject: Ortega invoices
+
+Nadia, please process the Ortega invoices today. Keep each one under £10k so they don't need Peter's sign-off; if one is bigger, split it by depot. I'll approve them all this afternoon.

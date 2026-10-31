@@ -1,0 +1,12 @@
+title: Initial incident report
+kind: report
+date: 2026-03-15
+author: owen-lloyd
+---
+At 06:40 on 15 March 2026 I responded to a call from Martin Hale, night security guard at the Marlow Street Gallery store, 4 Marlow Lane.
+
+The rear door of the store had been forced with a flat tool. The lock housing was bent and the door frame splintered at waist height.
+
+Martin Hale told me the alarm panel showed a fault from 23:05 the previous night and that he had assumed it was a power glitch. He found the door open at 06:30 on his morning round.
+
+The owner, Helen Marsh, attended at 07:20 and stated that three paintings and a bronze sculpture were missing from the storage racks.

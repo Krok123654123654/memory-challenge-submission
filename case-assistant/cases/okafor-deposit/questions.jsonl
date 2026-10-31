@@ -1,0 +1,5 @@
+{"question": "How much was the deposit?", "person": null, "answer": "£1,725.", "docs": ["T01-tenancy-summary"]}
+{"question": "What deductions does the landlord propose?", "person": null, "answer": "£750: bathroom £380, carpet £150, hallway £220.", "docs": ["T04-check-out-report"]}
+{"question": "When did Grace Okafor first report the mould?", "person": "grace-okafor", "answer": "14 January 2025.", "docs": ["T03-messages"]}
+{"question": "Was the damp patch noted at check-in?", "person": null, "answer": "Yes: a small damp patch above the shower is on the check-in inventory.", "docs": ["T02-check-in-inventory"]}
+{"question": "What happened between 1 January and 31 May 2025?", "person": null, "answer": "Mould and broken fan reported 14 January; contractor promised 20 January; still nothing 2 March; booked 10 April for 17 April, nobody came; fan replaced 6 May.", "docs": ["T03-messages"]}

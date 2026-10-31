@@ -1,0 +1,10 @@
+title: CCTV review log
+kind: report
+date: 2026-03-16
+author: owen-lloyd
+---
+Petrol station camera on the A41, 1.2 miles north of Marlow Lane: at 23:31 on 14 March a white van with a ladder rack passes heading north. The rear right door appears dented.
+
+The registration is partly obscured; the last two characters read K7.
+
+A van registered to Sam Reyes is a white Ford Transit whose registration ends in K7. This is a partial match only and has not been confirmed.

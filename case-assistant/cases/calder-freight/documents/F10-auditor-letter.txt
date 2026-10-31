@@ -1,0 +1,10 @@
+title: Auditor's management letter (extract)
+kind: report
+date: 2025-09-29
+author: jonas-weber
+---
+During the interim audit we identified 23 invoices from Ortega Facility Services Ltd, dated between 20 February 2025 and 12 September 2025, totalling £198,400. Every invoice was below £10,000 and approved by the Finance Director alone.
+
+For 17 of the 23 invoices we found no site log, purchase order or delivery record showing that the work was done.
+
+We recommend an investigation.

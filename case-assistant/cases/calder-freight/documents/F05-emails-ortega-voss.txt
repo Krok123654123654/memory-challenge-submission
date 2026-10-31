@@ -1,0 +1,9 @@
+title: Emails between Felix Ortega and Clara Voss
+kind: messages
+date: 2025-10-20
+author: lucy-tran
+---
+Recovered from Clara Voss's work mailbox. Times are local.
+
+Felix Ortega: [2 Apr 2025 10:14] Invoices 0412 to 0415 sent today. As agreed, 15% to the usual account by Friday.
+Clara Voss: [2 Apr 2025 10:31] Received. Do not email this address about that again.

@@ -1,0 +1,22 @@
+[
+  {"id": "daniel-reyes", "name": "Daniel Reyes", "role": "suspect", "aliases": ["Daniel", "Danny", "Mr Reyes"],
+   "notes": "Arrested 17 March 2026. Brother of Sam Reyes."},
+  {"id": "sam-reyes", "name": "Sam Reyes", "role": "person of interest", "aliases": ["Sam", "Samuel Reyes"],
+   "notes": "Daniel's brother; self-employed builder."},
+  {"id": "helen-marsh", "name": "Helen Marsh", "role": "victim (gallery owner)", "aliases": ["Helen", "Ms Marsh"],
+   "notes": "Owner of the Marlow Street Gallery."},
+  {"id": "anna-kowalski", "name": "Anna Kowalski", "role": "witness", "aliases": ["Anna", "Mrs Kowalski"],
+   "notes": "Lives at 12 Marlow Lane, behind the gallery store."},
+  {"id": "tomasz-kowalski", "name": "Tomasz Kowalski", "role": "witness", "aliases": ["Tomasz", "Mr Kowalski"],
+   "notes": "Anna Kowalski's husband."},
+  {"id": "martin-hale", "name": "Martin Hale", "role": "witness (night guard)", "aliases": ["Hale", "Mr Hale"],
+   "notes": "Night security guard at the gallery store. Not to be confused with Martin Price."},
+  {"id": "martin-price", "name": "Martin Price", "role": "witness (courier)", "aliases": ["Price", "Mr Price"],
+   "notes": "Courier who delivered to the gallery on 14 March. Not to be confused with Martin Hale."},
+  {"id": "claire-brennan", "name": "DS Claire Brennan", "role": "investigating officer", "aliases": ["DS Brennan", "Brennan"],
+   "notes": ""},
+  {"id": "owen-lloyd", "name": "PC Owen Lloyd", "role": "responding officer", "aliases": ["PC Lloyd", "Lloyd"],
+   "notes": ""},
+  {"id": "priya-nair", "name": "Dr Priya Nair", "role": "forensic examiner", "aliases": ["Dr Nair", "Nair"],
+   "notes": ""}
+]
