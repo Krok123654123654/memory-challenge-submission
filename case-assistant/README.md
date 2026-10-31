@@ -18,7 +18,7 @@ Needs Python 3.11 or newer. From this folder:
 python3 -m venv .venv
 . .venv/bin/activate                     # Windows: .venv\Scripts\activate
 pip install -r requirements.txt          # Linux without a GPU: first pip install torch --index-url https://download.pytorch.org/whl/cpu
-cp .env.example .env                     # then add a key for the answer mode you want (below)
+cp .env.example .env                     # then add the Reactor key, or an alternative's (below)
 uvicorn server:app --host 127.0.0.1 --port 8000
 ```
 
@@ -33,19 +33,22 @@ python scripts/check_case.py cases/calder-freight     # also cases/marlow-street
 
 ## Answers
 
-Pick the mode in the **Answers** menu at the top. Keys go in `.env`; the server reads it again on each request, so a
-key added there works without a restart. A mode without its settings is greyed out.
+**Reactor is the main answer mode.** OpenRouter and a local model are alternatives, for when Reactor is unavailable
+or too slow, or to keep everything on this machine. Pick the mode in the **Answers** menu at the top. Keys go in
+`.env`; the server reads it again on each request, so a key added there works without a restart. A mode without its
+settings is greyed out.
 
 | Mode | Settings in `.env` | What it does | Data leaves the machine? |
 | --- | --- | --- | --- |
-| OpenRouter (default when set) | `OPENROUTER_API_KEY`, `OPENROUTER_MODEL` (default `openai/gpt-6-luna`) | written, cited answers in a few seconds | yes: OpenRouter and the model provider |
-| Reactor (hackathon demo) | `REACTOR_BASE_URL`, `REACTOR_AGENT_ID`, `REACTOR_ACCESS_KEY` | the same from the hackathon's hosted agent, about a minute per answer | yes |
-| Local model | `LOCAL_LLM_URL`, `LOCAL_LLM_MODEL` | the same from any OpenAI-compatible server you run (llama.cpp, vLLM, Ollama) | no |
+| **Reactor** (main, the default) | `REACTOR_BASE_URL`, `REACTOR_AGENT_ID`, `REACTOR_ACCESS_KEY` | written, cited answers from the hackathon's hosted agent, one Reactor history per chat; about a minute per answer | yes |
+| OpenRouter (alternative) | `OPENROUTER_API_KEY`, `OPENROUTER_MODEL` (default `openai/gpt-6-luna`) | the same through OpenRouter, in a few seconds | yes: OpenRouter and the model provider |
+| Local model (alternative) | `LOCAL_LLM_URL`, `LOCAL_LLM_MODEL` | the same from any OpenAI-compatible server you run (llama.cpp, vLLM, Ollama) | no |
 | Sources only | none | the most relevant passages, cited, in order | no |
 
-Use the hosted modes with the synthetic cases only, never with real case files. Every question, the passages used and
-the answer are appended to the case's `audit.jsonl`. A *did it happen* question gets a **Yes**, **No**, **Disputed**
-(the sources contradict each other) or **Not in file** badge.
+The app opens with Reactor when it is configured; `ANSWERS_DEFAULT` in `.env` (`reactor`, `openrouter`, `local` or
+`retrieval`) changes that. Use the hosted modes with the synthetic cases only, never with real case files. Every
+question, the passages used and the answer are appended to the case's `audit.jsonl`. A *did it happen* question gets a
+**Yes**, **No**, **Disputed** (the sources contradict each other) or **Not in file** badge.
 
 ## Chat
 

@@ -386,7 +386,7 @@ async function init() {
     if (!ready) option.textContent += " (not configured)";
   }
   const router = [...backendSelect.options].find(o => o.value === "openrouter");
-  if (state.config.openrouter_model) router.textContent = `${state.config.openrouter_model.replace(/^openai\//, "")} (OpenRouter)`;
+  if (state.config.openrouter_model) router.textContent = `${state.config.openrouter_model.replace(/^openai\//, "")} (OpenRouter, alternative)`;
   backendSelect.value = state.config.default_backend;
   backendSelect.addEventListener("change", () => { if (location.hash.startsWith("#chat") || !location.hash) renderChat(); });
   caseSelect.addEventListener("change", () => { location.hash = "#chat"; loadCase(caseSelect.value); });

@@ -113,7 +113,9 @@ def span(dates: list[str]) -> str:
 def config():
     cases = sorted(p.name for p in CASES.iterdir() if (p / "documents").is_dir())
     ready = backends()
-    default = next(k for k in ("openrouter", "reactor", "retrieval") if ready[k])
+    # Reactor is the main mode; OpenRouter and a local model are alternatives. ANSWERS_DEFAULT in .env overrides.
+    wanted = os.environ.get("ANSWERS_DEFAULT", "")
+    default = wanted if ready.get(wanted) else next(k for k in ("reactor", "openrouter", "local", "retrieval") if ready[k])
     return {"cases": cases, "backends": ready, "default_backend": default,
             "openrouter_model": os.environ.get("OPENROUTER_MODEL", "")}
 
