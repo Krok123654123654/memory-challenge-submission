@@ -19,18 +19,19 @@
     "retry_cap_retained_s": 5,
     "history_bindings_unchanged": true
   },
-  "completed_questions": 86,
-  "remaining_questions": 60,
+  "completed_questions": 92,
+  "remaining_questions": 54,
   "completed_histories": 9,
-  "published_utc": "2026-10-31T09:58:46.845879+00:00",
-  "predictions_sha256": "b7a1f7be4ebbf22ecae04f8d39bdd1e37315b8425302ec8c37ef9783c0ff83c1",
+  "published_utc": "2026-10-31T10:19:08.498469+00:00",
+  "predictions_sha256": "234bc8a5e42458ed66c9e1c7d1fb7105054aba47a2b07b11278522748841d6a5",
   "official_score": "not available",
-  "note": "Partial snapshot of completed Reactor answers. Missing questions have no fabricated answer or abstention. The separate runner continues waiting for the pending response.",
+  "note": "Results-only update. Existing answers are unchanged; unfinished questions are absent. Source code is frozen at the original 86-answer submission.",
   "history_recovery": {
     "affected_dataset_history": "h_d98b301f60c5",
     "reason": "External accidental request replaced the active history",
     "discarded_attempt_answers": 2,
     "all_questions_for_affected_user_restarted": true,
     "aborted_answers_included": false
-  }
+  },
+  "source_code_frozen_at": "e8d264f31250eb1e17aab2758e0edd534018c474"
 }

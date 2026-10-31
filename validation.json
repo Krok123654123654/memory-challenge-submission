@@ -3,15 +3,9 @@
   "complete": false,
   "completed_predictions_valid": true,
   "planned_questions": 146,
-  "completed": 86,
-  "missing_count": 60,
+  "completed": 92,
+  "missing_count": 54,
   "missing_question_ids": [
-    "q_d52f60bba453",
-    "q_1b638b1afb30",
-    "q_25e9a4b961d7",
-    "q_c445bb1b8206",
-    "q_74c6d5125665",
-    "q_f14893711b1a",
     "q_7a0b603e6a97",
     "q_4efca781adeb",
     "q_6d1f42a4c0a8",
@@ -71,6 +65,6 @@
   "session_citations_valid": true,
   "one_reactor_history_per_completed_user": true,
   "unknown_labels_dropped": 0,
-  "predictions_sha256": "b7a1f7be4ebbf22ecae04f8d39bdd1e37315b8425302ec8c37ef9783c0ff83c1",
-  "validated_utc": "2026-10-31T09:58:46.845879+00:00"
+  "predictions_sha256": "234bc8a5e42458ed66c9e1c7d1fb7105054aba47a2b07b11278522748841d6a5",
+  "validated_utc": "2026-10-31T10:19:08.498469+00:00"
 }
