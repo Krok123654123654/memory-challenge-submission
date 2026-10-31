@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/RxAI-dev/memory-challenge",
+  "revision": "f0a317dfa13e7797baae61711cef27a9805bedcc",
+  "license": "No explicit license detected; not relicensed by this project",
+  "files": [
+    {
+      "path": "reactor/client.py",
+      "url": "https://raw.githubusercontent.com/RxAI-dev/memory-challenge/f0a317dfa13e7797baae61711cef27a9805bedcc/reactor/client.py",
+      "sha256": "99cd636b269736bfb0e7bcf0d1f1fbe7b47613753a1f9cc342aa3d0912d8a9a0",
+      "installed_sha256": "4213b984462a9f91b8ad33403779a53de9a88b037231de40c92935de1cbdb1df"
+    },
+    {
+      "path": "score.py",
+      "url": "https://raw.githubusercontent.com/RxAI-dev/memory-challenge/f0a317dfa13e7797baae61711cef27a9805bedcc/score.py",
+      "sha256": "d5081b7a3412c768d202b0ca693888d3135678c92b55a6321a24691d3e320297",
+      "installed_sha256": "d5081b7a3412c768d202b0ca693888d3135678c92b55a6321a24691d3e320297"
+    }
+  ]
+}

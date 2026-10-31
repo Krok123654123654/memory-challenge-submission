@@ -1,0 +1,42 @@
+{
+  "models": [
+    {
+      "id": "BAAI/bge-large-en-v1.5",
+      "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09",
+      "license": "MIT",
+      "files": [
+        "1_Pooling/config.json",
+        "config.json",
+        "config_sentence_transformers.json",
+        "model.safetensors",
+        "modules.json",
+        "sentence_bert_config.json",
+        "special_tokens_map.json",
+        "tokenizer.json",
+        "tokenizer_config.json",
+        "vocab.txt"
+      ]
+    },
+    {
+      "id": "hotchpotch/open-provence-reranker-v1-gte-modernbert-base",
+      "revision": "911517e2dc847a8ec00ceae795cd89e86ef90319",
+      "license": "MIT",
+      "trust_remote_code": true,
+      "files": [
+        "config.json",
+        "model.safetensors",
+        "modeling_open_provence_standalone.py",
+        "special_tokens_map.json",
+        "tokenizer.json",
+        "tokenizer_config.json"
+      ]
+    }
+  ],
+  "active_retrieval": {
+    "profile": "bge-large-openprovence-005-v1",
+    "embedding": "BAAI/bge-large-en-v1.5",
+    "reranker": "hotchpotch/open-provence-reranker-v1-gte-modernbert-base",
+    "pruning": true,
+    "pruning_threshold": 0.05
+  }
+}

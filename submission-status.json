@@ -1,0 +1,9 @@
+{
+  "status": "running",
+  "planned_questions": 146,
+  "histories": 15,
+  "previous_answers_reused": 0,
+  "prompt_version": "memory-goal-v5",
+  "retrieval_profile": "bge-large-openprovence-005-v1",
+  "predictions_published": false
+}

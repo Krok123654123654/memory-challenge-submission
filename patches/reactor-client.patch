@@ -1,0 +1,190 @@
+diff --git a/reactor/client.py b/reactor/client.py
+index 882c5e6..36aa782 100644
+--- a/reactor/client.py
++++ b/reactor/client.py
+@@ -63,7 +63,7 @@ Every outcome carries ``other_replies`` and ``late_replies`` where they apply, p
+ reading of the reply; how they map onto the evaluator's fields is for the evaluator to confirm.
+ 
+ ``--timeout`` (or ``REACTOR_TIMEOUT``) bounds the wait for the answer, retries included, in seconds. The default,
+-300, is provisional: the right value depends on measured answer latency and on how reliably the model writes the
++600, follows the organizers' advice for slow multi-cycle answers. The right value depends on measured answer latency and on how reliably the model writes the
+ final-answer line (without it, a question always runs to the timeout).
+ """
+ 
+@@ -83,13 +83,15 @@ import urllib.request
+ from datetime import datetime
+ from urllib.parse import quote, urlsplit
+ 
++from answer_guidance import ANSWER_GUIDANCE
++
+ try:
+     import websockets
+ except ImportError:  # environment_problem() says what to install
+     websockets = None
+ 
+ MAX_CHARS = 16000
+-DEFAULT_TIMEOUT = 300.0  # provisional: replace once latencies are measured
++DEFAULT_TIMEOUT = 600.0
+ # A final-answer line, "# FINAL ANSWER [ref:1a2b3c4d]: ...": like reactor-agent's own benchmark scorer
+ # (benchmark/scorers.py), flexible on '#'s, case, spacing, "_"/"-" and the colon, anchored at a line start.
+ _FINAL = re.compile(r"^[ \t]*#{1,3}[ \t]*final[ _-]?answer[ \t]*"
+@@ -188,13 +190,15 @@ def load_evidence(raw: str) -> list[dict]:
+     """Passages as ``{"id", "text"}`` (``id`` None when not given), plus ``"date"`` when given: a JSON list of strings
+     or ``{"id", "text"}`` objects, each with an optional ``"date"`` (the session's date, a one-line string passed on
+     as written), else plain text split on blank lines. Only what parses as JSON is held to that shape -- a chat log
+-    whose first line is ``[2024-05-01 18:02] ...`` is plain text."""
++    whose first line is ``[2024-05-01 18:02] ...`` is plain text. An explicit [] means no supporting evidence."""
+ 
+     try:
+         items = json.loads(raw) if raw.lstrip().startswith("[") else None
+     except ValueError:
+         items = None
+     if items is not None:
++        if items == []:
++            return []  # Explicit evidence-only request with no supporting passages.
+         passages = []
+         for item in items if isinstance(items, list) else [None]:
+             if isinstance(item, str):
+@@ -215,7 +219,8 @@ def load_evidence(raw: str) -> list[dict]:
+     return passages
+ 
+ 
+-def build_message(question: str, passages: list[dict], ref: str, question_date: str | None = None) -> str:
++def build_message(question: str, passages: list[dict], ref: str, question_date: str | None = None,
++                  evidence_supplied: bool = False) -> str:
+     """The one message for a question, its date and its passages, asking for ``# FINAL ANSWER [ref:<ref>]:``."""
+ 
+     question = question.strip()
+@@ -231,17 +236,21 @@ def build_message(question: str, passages: list[dict], ref: str, question_date:
+         lines.append(f"Question date: {question_date}. Answer as of that date: treat {question_date} as today for "
+                      "this question; the clock you see shows the real date -- ignore it here.")
+     if passages:
+-        lines += ["", "Evidence:"]
++        lines += ["", ANSWER_GUIDANCE, "", "Evidence:"]
+         for n, passage in enumerate(passages, 1):
+             about = [f"source: {passage['id']}"] if passage["id"] else []
+             about += [f"date: {passage['date']}"] if passage.get("date") else []
+             source = f" ({', '.join(about)})" if about else ""
+             lines.append(f"[E{n}]{source} {passage['text']}")
+-        lines += ["", "Answer from the evidence above and cite each passage you use by its label, e.g. [E1]."]
++        lines += ["", "Include the supporting [E#] labels after the answer on the # FINAL ANSWER line."]
++    elif evidence_supplied:
++        lines += ["", "This is an evidence-only request, but no supporting excerpts were supplied.",
++                  "The response for insufficient evidence is INSUFFICIENT_EVIDENCE."]
+     lines += ["", "When you have your answer, write it on a line of its own that starts exactly with:",
+               f"# FINAL ANSWER [ref:{ref}]: ",
+               f"If the information you have doesn't answer the question, that line is: # FINAL ANSWER [ref:{ref}]: "
+               f"{INSUFFICIENT}",
++              "An abstention can include [E#] labels for partial evidence on that same line.",
+               "Anything you send before that line is an interim note, not the answer."]
+     return "\n".join(lines)
+ 
+@@ -269,7 +278,7 @@ def citations(answer: str, passages: list[dict]) -> tuple[list[dict], list[str]]
+ 
+ 
+ async def ask(base_url: str, agent_id: str, access_key: str, text: str, *, timeout: float,
+-              ref: str | None = None, history: str | None = None) -> dict:
++              ref: str | None = None, history: str | None = None, receive_only: bool = False) -> dict:
+     """Sends ``text`` and waits for ``ref``'s final answer (module docstring); with no ``ref`` (``--text``), for the
+     first reply after the ack. Returns ``{"answer"?, "reply", "cycle", "latency_s", "other_replies",
+     "late_replies"}``; raises TimedOut, Closed or Refused (each with what arrived), or ConnectionRefusedError."""
+@@ -282,12 +291,12 @@ async def ask(base_url: str, agent_id: str, access_key: str, text: str, *, timeo
+     try:
+         async with asyncio.timeout(timeout):
+             async with websockets.connect(url, additional_headers=headers) as ws:
+-                try:
+-                    await ws.send(json.dumps({"type": "message", "text": text}))
+-                except websockets.ConnectionClosed:
+-                    # The server may refuse at connect (busy, history_*) and close while this was being sent: the
+-                    # refusal frame is already buffered, read below. Without one, this ends as Closed -- never retried.
+-                    pass
++                if not receive_only:
++                    try:
++                        await ws.send(json.dumps({"type": "message", "text": text}))
++                    except websockets.ConnectionClosed:
++                        # Refusal may already be buffered. Without one, never resend automatically.
++                        pass
+                 ack_cycle = None
+                 async for raw in ws:
+                     try:
+@@ -310,7 +319,7 @@ async def ask(base_url: str, agent_id: str, access_key: str, text: str, *, timeo
+                     cycle = frame.get("cycle")
+                     finals = final_answers(reply)
+                     late += [{"ref": r, "answer": a, "cycle": cycle} for r, a in finals.items() if r != ref]
+-                    if ack_cycle is None or not isinstance(cycle, int) or cycle <= ack_cycle:
++                    if not receive_only and (ack_cycle is None or not isinstance(cycle, int) or cycle <= ack_cycle):
+                         continue  # queued from before, or from a cycle that took its input before this message
+                     result = {"reply": reply, "cycle": cycle, "latency_s": round(time.monotonic() - started, 2),
+                               "other_replies": others, "late_replies": late}
+@@ -420,6 +429,9 @@ def main(argv: list[str] | None = None) -> int:
+     what.add_argument("--new-history", action="store_true", help="start a new, independent history")
+     what.add_argument("--question", help="your question, sent with --evidence in the template")
+     what.add_argument("--text", help="send this text verbatim instead: no template, no final-answer check")
++    what.add_argument("--receive-ref", help="listen for an existing 8-hex request ref without sending a new message; "
++                                           "requires its original --history and --evidence for citation mapping")
++    parser.add_argument("--ref", help="use this 8-hex request ref, persisted by a resumable runner")
+     parser.add_argument("--history", help="the history this question belongs to (from --new-history)")
+     parser.add_argument("--question-date", help="when the question is asked: YYYY-MM-DD, YYYY-MM-DD HH:MM, or the "
+                                                 "benchmark's '2023/05/30 (Tue) 08:08' (no timezone)")
+@@ -428,8 +440,7 @@ def main(argv: list[str] | None = None) -> int:
+     parser.add_argument("--evidence", help="retrieved passages: a JSON list or blank-line-separated text; - for stdin")
+     parser.add_argument("--max-chars", type=int, default=MAX_CHARS,
+                         help=f"refuse a longer message, before sending (default {MAX_CHARS})")
+-    parser.add_argument("--timeout", help=f"seconds to wait (default: REACTOR_TIMEOUT, else {DEFAULT_TIMEOUT:g}; "
+-                                          "provisional)")
++    parser.add_argument("--timeout", help=f"seconds to wait (default: REACTOR_TIMEOUT, else {DEFAULT_TIMEOUT:g})")
+     args = parser.parse_args(argv)
+     problem = environment_problem()
+     if problem:
+@@ -450,7 +461,18 @@ def main(argv: list[str] | None = None) -> int:
+             out["question_id"] = args.question_id
+         if args.history:
+             out["history_id"] = args.history
+-        if args.text is not None:
++        for value in (args.ref, args.receive_ref):
++            if value is not None and not re.fullmatch(r"[0-9a-f]{8}", value):
++                raise ValueError("request ref must contain exactly 8 lowercase hexadecimal characters")
++        if args.ref and args.question is None:
++            raise ValueError("--ref goes with --question")
++        if args.receive_ref:
++            if not args.history:
++                raise ValueError("--receive-ref requires the original --history")
++            passages = load_evidence(_read(args.evidence)) if args.evidence is not None else []
++            ref, text = args.receive_ref, ""
++            out.update(ref=ref, receive_only=True)
++        elif args.text is not None:
+             if args.evidence is not None or args.question_date:
+                 raise ValueError("--evidence and --question-date go with --question, not --text")
+             text, ref, passages = args.text, None, []
+@@ -458,19 +480,27 @@ def main(argv: list[str] | None = None) -> int:
+         else:
+             question_date = parse_question_date(args.question_date) if args.question_date else None
+             passages = load_evidence(_read(args.evidence)) if args.evidence is not None else []
+-            ref = secrets.token_hex(4)
+-            text = build_message(args.question, passages, ref, question_date)
++            ref = args.ref or secrets.token_hex(4)
++            text = build_message(args.question, passages, ref, question_date,
++                                 evidence_supplied=args.evidence is not None)
+             out.update(ref=ref, question=args.question, question_date=question_date)
+         if len(text) > args.max_chars:
+             raise ValueError(f"the message is {len(text)} characters, over --max-chars {args.max_chars}: "
+                              "send fewer or shorter passages")
+-        result, retries = ask_retrying(args.base_url, args.agent_id, key, text, timeout=timeout, ref=ref,
+-                                       history=args.history)
++        if args.receive_ref:
++            # Best-effort live/queued reply recovery. A server need not replay replies already lost;
++            # a timeout here is never permission to resend or reset the remote history.
++            result = asyncio.run(ask(args.base_url, args.agent_id, key, text, timeout=timeout, ref=ref,
++                                     history=args.history, receive_only=True))
++        else:
++            result, retries = ask_retrying(args.base_url, args.agent_id, key, text, timeout=timeout, ref=ref,
++                                           history=args.history)
+     except Refused as exc:
+         details = dict(exc.details)
+         if "history_id" in details:  # never confuse it with the history this question named (out["history_id"])
+             details["current_history_id"] = details.pop("history_id")
+         return _emit(4, {"status": "refused", **out, "code": exc.code, "text": str(exc), **details,
++                         "forwarded": exc.forwarded,
+                          "retries": getattr(exc, "retries", 0),
+                          "other_replies": exc.other_replies, "late_replies": exc.late_replies}, f"refused: {exc}")
+     except NoAnswer as exc:
