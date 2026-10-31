@@ -243,6 +243,11 @@ def parse_action(text):
         # Preserve an ordinary Reactor final answer verbatim, and record the deviation.
         return {"action":"answer", "answer":text.strip(),
                 "abstain":bool(client._INSUFFICIENT.match(text)), "format_deviation":True}
+    # Some final replies use an explicit abstain action instead of answer+true.
+    # Normalize only the envelope, preserving Reactor's decision and text.
+    if (isinstance(value, dict) and value.get("action") == "abstain"
+            and isinstance(value.get("answer"), str) and value.get("abstain", True) is True):
+        value.update(action="answer", abstain=True, original_action="abstain", format_deviation=True)
     if not isinstance(value, dict) or value.get("action") not in ("answer", "tools"):
         raise ValueError("Invalid action object")
     if value["action"] == "answer":
