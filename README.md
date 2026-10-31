@@ -2,7 +2,7 @@
 
 We retrieve and prune conversation evidence locally, then ask the organizer's Reactor agent for every final answer. The final configuration uses **BGE-large**, **BM25/RRF**, **OpenProvence at 0.05**, and the **v5 goal-based prompt**.
 
-**Submission status:** the fresh 146-question / 15-history run is in progress. Previous experimental answers are not reused. A complete `predictions.jsonl` will be published only after all 146 outputs pass validation. This repository contains the code and presentation; it does not claim an official test accuracy score.
+**Submission status:** partial results are available: 86/146 Reactor answers across 9/15 complete dataset histories. `predictions.jsonl` contains only completed answers, checked against saved Reactor replies. The remaining 60 questions are absent; no answers or abstentions were fabricated. See `validation.json` and `submission-status.json` for coverage. The run is still in progress. No official test accuracy is claimed.
 
 ## Reproduce
 
@@ -47,7 +47,7 @@ Validation checks every expected question exactly once, the required schema, val
 
 ## Submission files
 
-1. `predictions.jsonl` — published after the fresh run finishes and validates.
+1. `predictions.jsonl` — saved Reactor answers; current coverage is recorded in `submission-status.json`.
 2. This public repository and its short run instructions.
 3. `presentation/solution.pptx` and [speaker outline](PRESENTATION.md).
 

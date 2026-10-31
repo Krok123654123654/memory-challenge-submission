@@ -1,11 +1,11 @@
 {
-  "status": "running",
+  "status": "partial",
   "planned_questions": 146,
   "histories": 15,
   "previous_answers_reused": 0,
   "prompt_version": "memory-goal-v5",
   "retrieval_profile": "bge-large-openprovence-005-v1",
-  "predictions_published": false,
+  "predictions_published": true,
   "speed_adjustment": {
     "first_concise_question": 42,
     "max_retry_backoff_s": 5,
@@ -18,5 +18,19 @@
     "first_restored_question": "q_0f66a8b016b8",
     "retry_cap_retained_s": 5,
     "history_bindings_unchanged": true
+  },
+  "completed_questions": 86,
+  "remaining_questions": 60,
+  "completed_histories": 9,
+  "published_utc": "2026-10-31T09:58:46.845879+00:00",
+  "predictions_sha256": "b7a1f7be4ebbf22ecae04f8d39bdd1e37315b8425302ec8c37ef9783c0ff83c1",
+  "official_score": "not available",
+  "note": "Partial snapshot of completed Reactor answers. Missing questions have no fabricated answer or abstention. The separate runner continues waiting for the pending response.",
+  "history_recovery": {
+    "affected_dataset_history": "h_d98b301f60c5",
+    "reason": "External accidental request replaced the active history",
+    "discarded_attempt_answers": 2,
+    "all_questions_for_affected_user_restarted": true,
+    "aborted_answers_included": false
   }
 }
