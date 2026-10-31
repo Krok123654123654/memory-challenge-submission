@@ -12,29 +12,46 @@ its sources.
 
 ## Run it
 
+Needs Python 3.11 or newer. From this folder:
+
 ```sh
-python3 -m venv .venv && . .venv/bin/activate
-pip install -r requirements.txt
+python3 -m venv .venv
+. .venv/bin/activate                     # Windows: .venv\Scripts\activate
+pip install -r requirements.txt          # Linux without a GPU: first pip install torch --index-url https://download.pytorch.org/whl/cpu
+cp .env.example .env                     # then add a key for the answer mode you want (below)
 uvicorn server:app --host 127.0.0.1 --port 8000
 ```
 
-Open http://127.0.0.1:8000. The server listens on this machine only.
+Open http://127.0.0.1:8000, pick a case at the top and ask in the chat. The first start downloads the sentence
+embedder (BAAI/bge-small-en-v1.5, about 130 MB) and takes a little longer. The server listens on this machine only.
+
+To check that search finds the right documents, without any model:
+
+```sh
+python scripts/check_case.py cases/calder-freight     # also cases/marlow-street, cases/okafor-deposit
+```
 
 ## Answers
 
-| Mode | What it does | Data leaves the machine? |
-| --- | --- | --- |
-| Reactor (demo; the default when configured) | a written, cited answer from the hackathon's hosted agent, one Reactor history per chat; synthetic data only | yes |
-| Local model | the same from any OpenAI-compatible server you run (llama.cpp, vLLM, Ollama) | no |
-| Sources only | the most relevant passages, cited, in order | no |
+Pick the mode in the **Answers** menu at the top. Keys go in `.env`; the server reads it again on each request, so a
+key added there works without a restart. A mode without its settings is greyed out.
 
-Settings for the two model modes go in `.env` (see `.env.example`); a mode without settings is disabled. Every
-question, the passages used and the answer are appended to the case's `audit.jsonl`.
+| Mode | Settings in `.env` | What it does | Data leaves the machine? |
+| --- | --- | --- | --- |
+| OpenRouter (default when set) | `OPENROUTER_API_KEY`, `OPENROUTER_MODEL` (default `openai/gpt-6-luna`) | written, cited answers in a few seconds | yes: OpenRouter and the model provider |
+| Reactor (hackathon demo) | `REACTOR_BASE_URL`, `REACTOR_AGENT_ID`, `REACTOR_ACCESS_KEY` | the same from the hackathon's hosted agent, about a minute per answer | yes |
+| Local model | `LOCAL_LLM_URL`, `LOCAL_LLM_MODEL` | the same from any OpenAI-compatible server you run (llama.cpp, vLLM, Ollama) | no |
+| Sources only | none | the most relevant passages, cited, in order | no |
+
+Use the hosted modes with the synthetic cases only, never with real case files. Every question, the passages used and
+the answer are appended to the case's `audit.jsonl`. A *did it happen* question gets a **Yes**, **No**, **Disputed**
+(the sources contradict each other) or **Not in file** badge.
 
 ## Chat
 
-Each chat keeps its own Reactor history, so follow-ups work ("and his brother?"); a follow-up is also searched together
-with the previous question. *New chat* starts a fresh history. A period named in a message narrows the search to
+Each chat keeps its own conversation (a Reactor history, or the earlier turns sent along to OpenRouter or a local
+model), so follow-ups work ("and his brother?"); a follow-up is also searched together with the previous question.
+*New chat* starts afresh. A period named in a message narrows the search to
 passages about events in it, in the order they happened, and the model is told the period. Each passage's event date
 is the date its text names (or the last one before it in the same statement or interview), not only the date the
 document was written.
