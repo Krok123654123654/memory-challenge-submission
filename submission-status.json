@@ -10,5 +10,13 @@
     "first_concise_question": 42,
     "max_retry_backoff_s": 5,
     "history_resets_within_user": 0
+  },
+  "prompt_restoration": {
+    "reason": "User requested returning to the original prompt before the brevity change",
+    "after_completed_questions": 50,
+    "restored_unsent_questions": 96,
+    "first_restored_question": "q_0f66a8b016b8",
+    "retry_cap_retained_s": 5,
+    "history_bindings_unchanged": true
   }
 }
